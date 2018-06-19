@@ -1,0 +1,6 @@
+@copyright 2018 SigScale Global Inc.
+@version %VERSION%
+@title %DESCRIPTION%
+@doc This application implements the SNMP management information
+	base for SigScale Enterprise.
+

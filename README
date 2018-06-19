@@ -1,0 +1,19 @@
+# sigscale_mibs
+
+## Prerequisites
+	Install erlang
+	$ sudo apt install erlang
+
+## Building
+	$ mkdir ../sigscale_mibs.build (create build directory)
+	$ cd ../sigscale_mibs.build    (change working directory for build)
+	$ ../sigscale_mibs/configure   (creates Makefiles)
+	$ make                         (builds entire package)
+
+## Installing
+	$ sudo make install            (installs embedded application in system)
+
+## Cleaning
+	$ make clean                   (removes files created with make)
+	$ make distclean               (removes files created with configure also)
+
