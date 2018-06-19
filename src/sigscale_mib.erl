@@ -22,13 +22,25 @@
 -copyright('Copyright (c) 2018 SigScale Global Inc.').
 
 %% API
--export([load/1, unload/1]).
+-export([load/0, load/1, unload/0, unload/1]).
 
 %% SNMP instrumentation
 %-export([]).
 
+-spec load() -> Result
+	when
+		Result :: ok | {error, Reason},
+		Reason :: term().
+%% @doc Loads the SigScale Enterprise MIB.
+load() ->
+	MibDir = code:priv_dir(sigscale_mibs) ++ "/mibs",
+	Mibs = [MibDir ++ "/SIGSCALE-SMI",
+			MibDir ++ "/SIGSCALE-TC",
+			MibDir ++ "/SIGSCALE-MODULES-MIB",
+			MibDir ++ "/SIGSCALE-PRODUCTS-MIB"],
+	snmpa:load_mibs(Mibs).
 
--spec load (Agent) -> Result
+-spec load(Agent) -> Result
 	when
 		Agent :: pid() | atom(),
 		Result :: ok | {error, Reason},
@@ -42,7 +54,17 @@ load(Agent) ->
 			MibDir ++ "/SIGSCALE-PRODUCTS-MIB"],
 	snmpa:load_mibs(Agent, Mibs).
 
--spec unload (Agent) -> Result
+-spec unload() -> Result
+	when
+		Result :: ok | {error, Reason},
+		Reason :: term().
+%% @doc Unloads the SigScale Enterprise MIB.
+unload() ->
+	Mibs = ["SIGSCALE-SMI", "SIGSCALE-TC",
+			"SIGSCALE-MODULES-MIB", "SIGSCALE-PRODUCTS-MIB"],
+	snmpa:unload_mibs(Mibs).
+
+-spec unload(Agent) -> Result
 	when
 		Agent :: pid() | atom(),
 		Result :: ok | {error, Reason},
