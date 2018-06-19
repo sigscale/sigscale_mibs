@@ -8,3 +8,8 @@ mibs_DATA = SIGSCALE-SMI.mib \
 		SIGSCALE-MODULES-MIB.mib \
 		SIGSCALE-PRODUCTS-MIB.mib
 
+check_DATA = .tree_ok
+
+.tree_ok:
+	snmptranslate -M +$(top_srcdir)/mibs -m +SIGSCALE-SMI:SIGSCALE-TC:SIGSCALE-MODULES-MIB:SIGSCALE-PRODUCTS-MIB -Tp -IR sigscale
+
