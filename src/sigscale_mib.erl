@@ -28,12 +28,12 @@
 %-export([]).
 
 
-%% @spec(Agent) -> ok | {error, Reason}
-%% 	Agent = pid() | atom()
-%% 	Reason = term()
-%%
+-spec load (Agent) -> Result
+	when
+		Agent :: pid() | atom(),
+		Result :: ok | {error, Reason},
+		Reason = term().
 %% @doc Loads the SigScale Enterprise MIB.
-%%
 load(Agent) ->
 	MibDir = code:priv_dir(sigscale_mibs) ++ "/mibs",
 	Mibs = [MibDir ++ "/SIGSCALE-SMI",
@@ -42,12 +42,12 @@ load(Agent) ->
 			MibDir ++ "/SIGSCALE-PRODUCTS-MIB"],
 	snmpa:load_mibs(Agent, Mibs).
 
-%% @spec(Agent) -> ok | {error, Reason}
-%% 	Agent = pid() | atom()
-%% 	Reason = term()
-%%
+-spec unload (Agent) -> Result
+	when
+		Agent :: pid() | atom(),
+		Result :: ok | {error, Reason},
+		Reason = term().
 %% @doc Unloads the SigScale Enterprise MIB.
-%%
 unload(Agent) ->
 	Mibs = ["SIGSCALE-SMI", "SIGSCALE-TC",
 			"SIGSCALE-MODULES-MIB", "SIGSCALE-PRODUCTS-MIB"],
