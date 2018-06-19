@@ -32,7 +32,7 @@
 	when
 		Agent :: pid() | atom(),
 		Result :: ok | {error, Reason},
-		Reason = term().
+		Reason :: term().
 %% @doc Loads the SigScale Enterprise MIB.
 load(Agent) ->
 	MibDir = code:priv_dir(sigscale_mibs) ++ "/mibs",
@@ -46,7 +46,7 @@ load(Agent) ->
 	when
 		Agent :: pid() | atom(),
 		Result :: ok | {error, Reason},
-		Reason = term().
+		Reason :: term().
 %% @doc Unloads the SigScale Enterprise MIB.
 unload(Agent) ->
 	Mibs = ["SIGSCALE-SMI", "SIGSCALE-TC",
