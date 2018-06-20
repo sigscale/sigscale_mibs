@@ -11,5 +11,9 @@ mibs_DATA = SIGSCALE-SMI.mib \
 check_DATA = .tree_ok
 
 .tree_ok:
-	snmptranslate -M +$(top_srcdir)/mibs -m +SIGSCALE-SMI:SIGSCALE-TC:SIGSCALE-MODULES-MIB:SIGSCALE-PRODUCTS-MIB -Tp -IR sigscale
+	@if snmptranslate -V > /dev/null 2>&1; then \
+		snmptranslate -M +$(top_srcdir)/mibs \
+			-m +SIGSCALE-SMI:SIGSCALE-MODULES-MIB:SIGSCALE-PRODUCTS-MIB \
+			-Lo -Tp -IR sigscale; \
+	fi
 
