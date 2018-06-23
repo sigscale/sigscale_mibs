@@ -1,7 +1,7 @@
 {application, %APP_NAME%,
 	[{description, "SNMP managment information base for SigScale Enterprise"},
 		{vsn, "%APP_VERSION%"},
-		{modules, [sigscale_mib]},
+		{modules, [sigscale_mib, sigscale_snmp_lib]},
 		{registered, []},
 		{applications, [kernel, stdlib, snmp]},
 		{env, []}]}.

@@ -3,7 +3,8 @@
 ##
 ## Process this file with automake to produce Makefile.in
 
-modhtml = sigscale_mib.html
+modhtml = sigscale_mib.html \
+		sigscale_snmp_lib.html
 
 doc_DATA = overview.edoc $(modhtml) \
 		modules-frame.html overview-summary.html \

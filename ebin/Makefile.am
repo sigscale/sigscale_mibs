@@ -7,7 +7,8 @@ appdir = $(beamdir)
 app_DATA = sigscale_mibs.app
 EXTRA_DIST = sigscale_mibs.app
 
-beam_DATA = sigscale_mib.beam
+beam_DATA = sigscale_mib.beam \
+		sigscale_snmp_lib.beam
 
 %.beam:$(top_srcdir)/src/%.erl
 	$(ERLC) $(ERLCFLAGS) -I $(top_srcdir)/include $<
