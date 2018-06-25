@@ -33,12 +33,17 @@
 		Reason :: term().
 %% @doc Loads the SigScale Enterprise MIB.
 load() ->
-	MibDir = code:priv_dir(sigscale_mibs) ++ "/mibs",
-	Mibs = [MibDir ++ "/SIGSCALE-SMI",
-			MibDir ++ "/SIGSCALE-TC",
-			MibDir ++ "/SIGSCALE-MODULES-MIB",
-			MibDir ++ "/SIGSCALE-PRODUCTS-MIB"],
-	snmpa:load_mibs(Mibs).
+	case code:priv_dir(sigscale_mibs) of
+		PrivDir when is_list(PrivDir) ->
+			MibDir = PrivDir ++ "/mibs",
+			Mibs = [MibDir ++ "/SIGSCALE-SMI",
+					MibDir ++ "/SIGSCALE-TC",
+					MibDir ++ "/SIGSCALE-MODULES-MIB",
+					MibDir ++ "/SIGSCALE-PRODUCTS-MIB"],
+			snmpa:load_mibs(Mibs);
+		{error, Reason} ->
+			{error, Reason}
+	end.
 
 -spec load(Agent) -> Result
 	when
@@ -47,12 +52,17 @@ load() ->
 		Reason :: term().
 %% @doc Loads the SigScale Enterprise MIB.
 load(Agent) ->
-	MibDir = code:priv_dir(sigscale_mibs) ++ "/mibs",
-	Mibs = [MibDir ++ "/SIGSCALE-SMI",
-			MibDir ++ "/SIGSCALE-TC",
-			MibDir ++ "/SIGSCALE-MODULES-MIB",
-			MibDir ++ "/SIGSCALE-PRODUCTS-MIB"],
-	snmpa:load_mibs(Agent, Mibs).
+	case code:priv_dir(sigscale_mibs) of
+		PrivDir when is_list(PrivDir) ->
+			MibDir = PrivDir ++ "/mibs",
+			Mibs = [MibDir ++ "/SIGSCALE-SMI",
+					MibDir ++ "/SIGSCALE-TC",
+					MibDir ++ "/SIGSCALE-MODULES-MIB",
+					MibDir ++ "/SIGSCALE-PRODUCTS-MIB"],
+			snmpa:load_mibs(Agent, Mibs);
+		{error, Reason} ->
+			{error, Reason}
+	end.
 
 -spec unload() -> Result
 	when
