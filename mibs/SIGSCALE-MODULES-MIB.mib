@@ -1,4 +1,4 @@
--- SIGSCALE-MODULES-MIB.mib:  SigScale Telecom Modules
+-- SIGSCALE-MODULES-MIB.mib:  SigScale Global Inc. Modules
 
 SIGSCALE-MODULES-MIB DEFINITIONS ::= BEGIN
 
