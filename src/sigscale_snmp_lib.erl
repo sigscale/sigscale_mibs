@@ -39,21 +39,104 @@
 engine_id() ->
 	case inet:getifaddrs() of
 		{ok, IfList} ->
-			B = <<1:1, 0:31, ?sigscalePEN>>,
-			engine_id(IfList, binary_to_list(B));
+			PEN = <<1:1, ?sigscalePEN:31>>,
+			engine_id1(IfList, binary_to_list(PEN), []);
 		{error, Reason} ->
 			{error, Reason}
 	end.
 %% @hidden
-engine_id(_, Acc) when length(Acc) >= 12 ->
-	lists:sublist(Acc, 12);
-engine_id([{_, IfOpt} | T], Acc) when length(Acc) < 12 ->
+engine_id1([{_, IfOpt} | T], PEN, Acc) ->
 	case lists:keyfind(hwaddr, 1, IfOpt) of
-		{_, HwAddr} ->
-			engine_id(T, Acc ++ HwAddr);
+		{hwaddr, [0, 0, 0, 0, 0, 0]} ->
+			engine_id1(T, PEN, Acc);
+		{hwaddr, [255, 255, 255, 255, 255, 255]} ->
+			engine_id1(T, PEN, Acc);
+		{hwaddr, HwAddr} when length(HwAddr) == 6 ->
+			engine_id1(T, PEN, [HwAddr | Acc]);
 		false ->
-			engine_id(T, Acc)
+			engine_id1(T, PEN, Acc)
 	end;
-engine_id([], Acc) ->
-	Acc ++ [rand:uniform(255)].
+engine_id1([], PEN, []) ->
+	engine_id2(inet:getifaddrs(), PEN, []);
+engine_id1([], PEN, Acc) ->
+	[H | _] = lists:sort(Acc),
+	PEN ++ [3 | H].
+%% @hidden
+%% avoid RFC5735 special-use ipv4 addresses
+engine_id2([{_, IfOpt} | T], PEN, Acc) ->
+	case lists:keyfind(hwaddr, 1, IfOpt) of
+		{addr, {N, _, _, _}} when N == 0; N == 10; N == 127 ->
+			engine_id2(T, PEN, Acc);
+		{addr, {169, 254, _, _}} ->
+			engine_id2(T, PEN, Acc);
+		{addr, {172, N, _, _}} when N > 15 ->
+			engine_id2(T, PEN, Acc);
+		{addr, {192, 0, N, _}} when N == 0; N == 2 ->
+			engine_id2(T, PEN, Acc);
+		{addr, {192, 88, 99, _}} ->
+			engine_id2(T, PEN, Acc);
+		{addr, {192, 168, _, _}} ->
+			engine_id2(T, PEN, Acc);
+		{addr, {198, N, _, _}} when N > 253 ->
+			engine_id2(T, PEN, Acc);
+		{addr, {198, 51, 100, _}} ->
+			engine_id2(T, PEN, Acc);
+		{addr, {203, 0, 113, _}} ->
+			engine_id2(T, PEN, Acc);
+		{addr, {N, _, _, _}} when N > 239 ->
+			engine_id2(T, PEN, Acc);
+		{addr, {A, B, C, D}} ->
+			engine_id2(T, PEN, [[A, B, C, D] | Acc]);
+		_ ->
+			engine_id2(T, PEN, Acc)
+	end;
+engine_id2([], PEN, []) ->
+	engine_id3(inet:getifaddrs(), PEN, []);
+engine_id2([], PEN, Acc) ->
+	[H | _] = lists:sort(Acc),
+	PEN ++ [1 | H].
+%% @hidden
+%% avoid RFC5156 special-use ipv6 addresses
+engine_id3([{_, IfOpt} | T], PEN, Acc) ->
+	case lists:keyfind(hwaddr, 1, IfOpt) of
+		{addr, {0, 0, 0, 0, 0, 0, 0, 1}} ->
+			engine_id3(T, PEN, Acc);
+		{addr, {0, 0, 0, 0, 0, 65535, _, _}} ->
+			engine_id3(T, PEN, Acc);
+		{addr, {N, _, _, _, _, _, _, _}} when N > 65199, N < 65216 ->
+			engine_id3(T, PEN, Acc);
+		{addr, {N, _, _, _, _, _, _, _}} when N > 64511, N < 65024 ->
+			engine_id3(T, PEN, Acc);
+		{addr, {8193, 3512,_, _, _, _, _, _}} ->
+			engine_id3(T, PEN, Acc);
+		{addr, {8194, _, _, _, _, _, _, _}} ->
+			engine_id3(T, PEN, Acc);
+		{addr, {8193, 0, _, _, _, _, _, _}} ->
+			engine_id3(T, PEN, Acc);
+		{addr, {N, _, _, _, _, _, _, _}} when N > 24319; N < 24576 ->
+			engine_id3(T, PEN, Acc);
+		{addr, {16382, _, _, _, _, _, _, _}} ->
+			engine_id3(T, PEN, Acc);
+		{addr, {8193, N, _, _, _, _, _, _}} when N > 4095; N < 4112 ->
+			engine_id3(T, PEN, Acc);
+		{addr, {0, 0, 0, 0, 0, 0, 0, 0}} ->
+			engine_id3(T, PEN, Acc);
+		{addr, {N, _, _, _, _, _, _, _}} when N > 65279 ->
+			engine_id3(T, PEN, Acc);
+		{addr, {A, B, C, D, E, F, G, H}} ->
+			engine_id3(T, PEN, [[A, B, C, D, E, F, G, H] | Acc]);
+		_ ->
+			engine_id3(T, PEN, Acc)
+	end;
+engine_id3([], PEN, []) ->
+	engine_id4(PEN, []);
+engine_id3([], PEN, Acc) ->
+	[H | _] = lists:sort(Acc),
+	A = [[N bsr 8, N band 16#00FF] || N <- H],
+	PEN ++ [2 | A].
+%% @hidden
+
+	PEN ++ [5 | Acc];
+engine_id4(PEN, Acc) ->
+	engine_id4(PEN, [rand:uniform(255) | Acc]).
 
