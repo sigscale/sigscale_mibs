@@ -1,0 +1,8 @@
+2018-07-04  Vance Shipley <vances@sigscale.org>
+
+	* version 1.0
+	* add diameter modules to experiments
+	* add library module
+	* api to generate rfc3411 snmp engine id
+	* add test suites
+
