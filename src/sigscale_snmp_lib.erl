@@ -135,7 +135,7 @@ engine_id3([], PEN, Acc) ->
 	A = [[N bsr 8, N band 16#00FF] || N <- H],
 	PEN ++ [2 | A].
 %% @hidden
-
+engine_id4(PEN, Acc) when length(Acc) == 27 ->
 	PEN ++ [5 | Acc];
 engine_id4(PEN, Acc) ->
 	engine_id4(PEN, [rand:uniform(255) | Acc]).
