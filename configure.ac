@@ -83,6 +83,6 @@ AC_ERLANG_CHECK_LIB([snmp], [], [AC_MSG_ERROR([snmp was not found!])])
 ##
 ## Output:  create output files
 ## 
-AC_OUTPUT([Makefile ebin/Makefile doc/Makefile
-		priv/Makefile priv/mibs/Makefile mibs/Makefile])
+AC_OUTPUT([Makefile ebin/Makefile doc/Makefile priv/Makefile
+		priv/mibs/Makefile mibs/Makefile test/Makefile])
 

@@ -2,5 +2,5 @@
 ##
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = ebin doc priv mibs
+SUBDIRS = ebin doc priv mibs test
 
