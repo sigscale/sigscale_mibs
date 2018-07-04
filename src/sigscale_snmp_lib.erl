@@ -57,7 +57,12 @@ engine_id1([{_, IfOpt} | T], PEN, Acc) ->
 			engine_id1(T, PEN, Acc)
 	end;
 engine_id1([], PEN, []) ->
-	engine_id2(inet:getifaddrs(), PEN, []);
+	case inet:getifaddrs() of
+		{ok, IfList} ->
+			engine_id2(IfList, PEN, []);
+		{error, Reason} ->
+			{error, Reason}
+	end;
 engine_id1([], PEN, Acc) ->
 	[H | _] = lists:sort(Acc),
 	PEN ++ [3 | H].
@@ -91,7 +96,12 @@ engine_id2([{_, IfOpt} | T], PEN, Acc) ->
 			engine_id2(T, PEN, Acc)
 	end;
 engine_id2([], PEN, []) ->
-	engine_id3(inet:getifaddrs(), PEN, []);
+	case inet:getifaddrs() of
+		{ok, IfList} ->
+			engine_id3(IfList, PEN, []);
+		{error, Reason} ->
+			{error, Reason}
+	end;
 engine_id2([], PEN, Acc) ->
 	[H | _] = lists:sort(Acc),
 	PEN ++ [1 | H].
