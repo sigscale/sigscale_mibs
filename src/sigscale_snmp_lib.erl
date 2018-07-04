@@ -25,11 +25,9 @@
 %% API
 -export([engine_id/0]).
 
--spec engine_id() -> Result
+-spec engine_id() -> EngineID
 	when
-		Result :: EngineID | {error, Reason},
-		EngineID :: [byte()],
-		Reason :: term().
+		EngineID :: [byte()].
 %% @doc Create a unique SNMP EngineID for SigScale Enterprise.
 %%
 %% 	The algorithm in RFC3411 is used to generate a unique value to
@@ -37,12 +35,12 @@
 %% 	for the OTP SNMP agent.
 %%
 engine_id() ->
+	PEN = binary_to_list(<<1:1, ?sigscalePEN:31>>),
 	case inet:getifaddrs() of
 		{ok, IfList} ->
-			PEN = <<1:1, ?sigscalePEN:31>>,
-			engine_id1(IfList, binary_to_list(PEN), []);
-		{error, Reason} ->
-			{error, Reason}
+			engine_id1(IfList, PEN, []);
+		{error, _Reason} ->
+			engine_id4(PEN, [])
 	end.
 %% @hidden
 engine_id1([{_, IfOpt} | T], PEN, Acc) ->
@@ -60,8 +58,8 @@ engine_id1([], PEN, []) ->
 	case inet:getifaddrs() of
 		{ok, IfList} ->
 			engine_id2(IfList, PEN, []);
-		{error, Reason} ->
-			{error, Reason}
+		{error, _Reason} ->
+			engine_id4(PEN, [])
 	end;
 engine_id1([], PEN, Acc) ->
 	[H | _] = lists:sort(Acc),
@@ -99,8 +97,8 @@ engine_id2([], PEN, []) ->
 	case inet:getifaddrs() of
 		{ok, IfList} ->
 			engine_id3(IfList, PEN, []);
-		{error, Reason} ->
-			{error, Reason}
+		{error, _Reason} ->
+			engine_id4(PEN, [])
 	end;
 engine_id2([], PEN, Acc) ->
 	[H | _] = lists:sort(Acc),
