@@ -3,7 +3,7 @@
 SIGSCALE-MODULES-MIB DEFINITIONS ::= BEGIN
 
 IMPORTS
-    sigscaleModules, sigscaleManagement
+    sigscaleModules, sigscaleManagement, sigscaleExperiment
         FROM SIGSCALE-SMI
     MODULE-IDENTITY
         FROM SNMPv2-SMI;
@@ -24,9 +24,11 @@ sigscaleModulesMIB MODULE-IDENTITY
 
 --
 
-sigscaleSMI OBJECT IDENTIFIER ::= {sigscaleModules 2}
-sigscaleProductsMIB OBJECT IDENTIFIER ::= {sigscaleModules 3}
-sigscaleTextualConvention OBJECT IDENTIFIER ::= {sigscaleManagement 1}
-ocsMIB OBJECT IDENTIFIER ::= {sigscaleManagement 51}
+sigscaleSMI                OBJECT IDENTIFIER ::= {sigscaleModules 2}
+sigscaleProductsMIB        OBJECT IDENTIFIER ::= {sigscaleModules 3}
+sigscaleTextualConvention  OBJECT IDENTIFIER ::= {sigscaleManagement 1}
+ocsMIB                     OBJECT IDENTIFIER ::= {sigscaleManagement 51}
+diameterBaseProtocolMIB    OBJECT IDENTIFIER ::= {sigscaleExperiment 1}
+diameterCCAMIB             OBJECT IDENTIFIER ::= {sigscaleExperiment 2}
 
 END
