@@ -25,6 +25,5 @@ sigscaleProductsMIB MODULE-IDENTITY
 --
 
 ocs OBJECT IDENTIFIER ::= {sigscaleProducts 1}
-ofcs OBJECT IDENTIFIER ::= {sigscaleProducts 2}
 
 END
