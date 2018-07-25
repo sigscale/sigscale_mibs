@@ -7,7 +7,7 @@ SUBDIRS = ebin doc priv mibs test
 .PHONY: release
 release: $(PACKAGE_VERSION).tar.gz
 
-$(PACKAGE_VERSION).tar.gz: $(PACKAGE_NAME).rel sys.config
+$(PACKAGE_VERSION).tar.gz: $(PACKAGE_NAME).rel
 	cp $(PACKAGE_NAME).rel $(PACKAGE_VERSION).rel
 	$(ERL) -noinput \
 		-eval "systools:make_script(\"$(PACKAGE_VERSION)\")" \
