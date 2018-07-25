@@ -30,5 +30,6 @@ sigscaleTextualConvention  OBJECT IDENTIFIER ::= {sigscaleManagement 1}
 ocsMIB                     OBJECT IDENTIFIER ::= {sigscaleManagement 51}
 diameterBaseProtocolMIB    OBJECT IDENTIFIER ::= {sigscaleExperiment 1}
 diameterCCAMIB             OBJECT IDENTIFIER ::= {sigscaleExperiment 2}
+m3uaMIB                    OBJECT IDENTIFIER ::= {sigscaleExperiment 3}
 
 END
