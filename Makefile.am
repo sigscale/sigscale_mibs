@@ -7,6 +7,9 @@ SUBDIRS = ebin doc priv mibs test
 .PHONY: release
 release: $(PACKAGE_VERSION).tar.gz
 
+$(PACKAGE_VERSION).rel:	$(PACKAGE_NAME).rel
+	cp $(PACKAGE_NAME).rel $(PACKAGE_VERSION).rel
+
 $(PACKAGE_VERSION).tar.gz: $(PACKAGE_NAME).rel
 	cp $(PACKAGE_NAME).rel $(PACKAGE_VERSION).rel
 	$(ERL) -noinput \
@@ -20,5 +23,5 @@ install-data-hook: $(PACKAGE_VERSION).tar.gz
 
 EXTRA_DIST = $(PACKAGE_VERSION).tar.gz
 
-CLEANFILES = $(PACKAGE_VERSION).script $(PACKAGE_VERSION).boot $(PACKAGE_VERSION).tar.gz
+CLEANFILES = $(PACKAGE_VERSION).rel $(PACKAGE_VERSION).script $(PACKAGE_VERSION).boot $(PACKAGE_VERSION).tar.gz
 
