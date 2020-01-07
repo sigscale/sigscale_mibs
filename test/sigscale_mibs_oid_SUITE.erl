@@ -46,6 +46,7 @@ suite() ->
 	{require, snmp_mgr_agent, snmp},
 	{default_config, snmp,
       	[{start_agent, true},
+			{start_manager, false},
 			{agent_udp, Port},
 			{agent_engine_id, engine_id()},
 			{users,
