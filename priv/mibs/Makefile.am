@@ -9,7 +9,7 @@ emib_DATA =  SIGSCALE-SMI.bin \
 			SIGSCALE-PRODUCTS-MIB.bin
 
 %.bin:$(top_srcdir)/mibs/%.mib
-	$(ERLC) $(ERLCFLAGS) -I $(top_srcdir)/include $<
+	$(ERLC) -I $(top_srcdir)/include $<
 
 CLEANFILES = $(emib_DATA)
 
