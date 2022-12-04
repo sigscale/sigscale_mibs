@@ -6,7 +6,7 @@
 modhtml = sigscale_mib.html \
 		sigscale_snmp_lib.html
 
-doc_DATA = overview.edoc
+doc_DATA = overview.edoc \
 		$(modhtml) \
 		modules-frame.html \
 		overview-summary.html \
