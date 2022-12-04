@@ -6,9 +6,12 @@
 modhtml = sigscale_mib.html \
 		sigscale_snmp_lib.html
 
-doc_DATA = overview.edoc $(modhtml) \
-		modules-frame.html overview-summary.html \
-		index.html stylesheet.css \
+doc_DATA = overview.edoc
+		$(modhtml) \
+		modules-frame.html \
+		overview-summary.html \
+		index.html \
+		stylesheet.css \
 		sigscale-logo.png
 
 overview.edoc: overview.edoc-in
@@ -27,7 +30,12 @@ overview.edoc: overview.edoc-in
 	done
 	-cp -n $(top_srcdir)/doc/sigscale-logo.png .
 
-CLEANFILES = overview.edoc edoc-info index.html \
-		modules-frame.html overview-summary.html packages-frame.html \
-		stylesheet.css erlang.png $(modhtml)
+CLEANFILES = overview.edoc \
+		edoc-info index.html \
+		modules-frame.html \
+		overview-summary.html \
+		packages-frame.html \
+		stylesheet.css \
+		erlang.png \
+		$(modhtml)
 
