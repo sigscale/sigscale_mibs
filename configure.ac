@@ -87,5 +87,5 @@ AC_ERLANG_CHECK_LIB([snmp], [], [AC_MSG_ERROR([snmp was not found!])])
 ## 
 AC_OUTPUT([Makefile ebin/Makefile doc/Makefile priv/Makefile
 		priv/mibs/Makefile mibs/Makefile test/Makefile
-		$PACKAGE_NAME.rel])
+		$PACKAGE_NAME.rel sys.config])
 
