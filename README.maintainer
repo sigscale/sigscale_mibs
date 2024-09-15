@@ -29,6 +29,7 @@ Note:
 
 ## Building
 	$ mkdir ../sigscale_mibs.build (create build directory)
+	$ cp README.build ../sigscale_mibs.build/README
 	$ cd ../sigscale_mibs.build    (change working directory for build)
 	$ ../sigscale_mibs/configure   (creates Makefiles)
 	$ make                         (builds entire package)
