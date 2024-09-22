@@ -1,3 +1,12 @@
+2024-09-22  Vance Shipley <vances@sigscale.org>
+
+	*  include all application upgrade files in release package
+	*  build instructions
+	*  system configuration file
+	*  modernize release package naming
+	*  use lib in tmpdir making release
+	*  modernize release building
+
 2022-12-04  Vance Shipley <vances@sigscale.org>
 
 	* version 1.1.0
