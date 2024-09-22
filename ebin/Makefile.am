@@ -4,8 +4,8 @@
 ## Process this file with automake to produce Makefile.in
 
 appdir = $(beamdir)
-app_DATA = sigscale_mibs.app
-EXTRA_DIST = sigscale_mibs.app
+app_DATA = sigscale_mibs.app sigscale_mibs.appup
+EXTRA_DIST = sigscale_mibs.app sigscale_mibs.appup
 
 beam_DATA = sigscale_mib.beam \
 		sigscale_snmp_lib.beam
